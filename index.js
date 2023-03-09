@@ -6,7 +6,6 @@ const cors = require('cors')
 //connection to mongose
 require('./drivers/connect-db')
 
-
 //Settings
 app.set('port', process.env.PORT || 3000)
 
@@ -15,7 +14,6 @@ app.use(cors())
 app.use(express.json())
 app.use(express.urlencoded({extended:false}))
 app.use('/bookings',require('./routes/bookings'))
-//app.use('/customers',require('./routes/customers'))
 
 app.listen(app.get('port'),()=>{
     console.log('listening on port http://localhost:'+app.get('port'))

@@ -5,7 +5,7 @@ mongoose.set('strictQuery', false)
 
 mongoose.connect(URI)
     .then(()=>{
-        console.log("Connected to Mongo bookings")
+        console.log("Connected to Mongo in collection bookings")
     })
     .catch(err => console.log(err))
 

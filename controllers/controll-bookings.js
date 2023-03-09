@@ -9,18 +9,20 @@ module.exports = {
             res.status(500).json({ "Success": false, "Error": err })
         }
     }, save: async (req, res) => {
-        const { person, car,booking , delivery, observations } = req.body
-
+        const { person, car, booking, delivery, observations } = req.body
+        const query = { booking: booking , car: car }
+        const search = await Booking.find(query)
         try {
-            //const booking = await Booking.findById(id)
-            const booking = new Booking(req.body)
-            await booking.save()
-            res.status(200).json({ "Success": true, "Data": booking })
+            const bookingNew = new Booking(req.body)
+            if(search!=""){
+                res.status(404).json({"Success":false, "Data":`Existe una reserva existente para la fecha y hora: ${booking} y auto: ${car}`})
+            }else{
+                await bookingNew.save()
+                res.status(200).json({ "Success": true, "Data": bookingNew })
+            }
         } catch (err) {
             res.status(500).json({ "Success": false, "Error": err })
         }
-
-
     }, findById: async (req, res) => {
         const { id } = req.params
         try {
@@ -34,7 +36,7 @@ module.exports = {
         const booking = req.body
         try {
             const result = await Booking.findByIdAndUpdate(id, booking)
-            res.status(200).json({ "Success": true, "Data": result })
+            res.status(200).json({ "Success": true, "Data": booking })
         } catch (err) {
             res.status(500).json({ "Success": false, "Error": err })
         }
